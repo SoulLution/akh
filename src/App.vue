@@ -4,13 +4,13 @@
     <div class="header">
 
       <div class="header-main">
-        <img class="header-main-bg" src="/static/header_bg.svg">
-        <img class="header-main-logo" src="/static/logo.svg">
+        <img class="header-main-bg" src="static/header_bg.svg">
+        <img class="header-main-logo" src="static/logo.svg">
         <div class="header-main-title">Продвижение и автоматизация </div>
         <div class="header-main-about">для застройщиков, девелоперов и агентств недвижимости</div>
         <div class="button header-main-button" @click="comeToElem('form')">
-          <img class="button-bg" src="/static/0_button.svg">
-          <img class="button-shadow" style="height: 105%;right: -55px;top: 1px;" src="/static/0_shadow.svg">
+          <img class="button-bg" src="static/0_button.svg">
+          <img class="button-shadow" style="height: 105%;right: -55px;top: 1px;" src="static/0_shadow.svg">
           <div class="button-title">Получить консультацию</div>
         </div>
         <div class="header-main-down" @click="comeToElem('section', 0)">
@@ -24,13 +24,13 @@
 
     <div class="body">
 
-      <img class="body-side" src="/static/side.svg">
+      <img class="body-side" src="static/side.svg">
 
 
       <div class="body-section" ref="section" :class="{ 'reverse': i % 2 !== 0, 'invisible': scrolling < i }" v-for="(sector, i) in data">
-        <img class="body-section-img" :style="{marginLeft: i === 4 ? '10%' : 0, maxWidth: i === 4 ? '391px' : '50%'}" :src="'/static/' + i + '.jpg'">
+        <img class="body-section-img" :style="{marginLeft: i === 4 ? '10%' : 0, maxWidth: i === 4 ? '391px' : '50%'}" :src="'static/' + i + '.jpg'">
         <div class="body-section-content">
-        <img class="body-section-content-figure" :style="{animation:('sprinkle-wiggle-' + i + ' 5s ease-in-out infinite')}" :src="'/static/' + i + '.svg'" @mouseover="e=>{ setAnim(e, i) }">
+        <img class="body-section-content-figure" :style="{animation:('sprinkle-wiggle-' + i + ' 5s ease-in-out infinite')}" :src="'static/' + i + '.svg'" @mouseover="e=>{ setAnim(e, i) }">
           <div class="body-section-content-title">{{sector.title}}</div>
           <div class="body-section-content-about">{{sector.about}}</div>
         </div>
@@ -39,7 +39,7 @@
       <div class="body-form" ref="form">
         <div class="body-form-header">
           <div class="body-form-header-title">А еще мы можем просто проконсультировать вас по любому вопросу</div>
-          <img class="body-form-header-figure" src="/static/form_bg.svg">
+          <img class="body-form-header-figure" src="static/form_bg.svg">
         </div>
         <div class="body-form-body">
           <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
@@ -48,8 +48,8 @@
         </div>
         <div class="body-form-footer" ref="section" v-for="i in 1">
           <div class="button body-form-footer-button">
-            <img class="button-bg reverse" src="/static/1_button.svg">
-            <img class="button-shadow reverse" style="right: -7px;top: -2px;" src="/static/1_shadow.svg">
+            <img class="button-bg reverse" src="static/1_button.svg">
+            <img class="button-shadow reverse" style="right: -7px;top: -2px;" src="static/1_shadow.svg">
             <div class="button-title">Отправить</div>
           </div>
         </div>
@@ -63,7 +63,7 @@
         <div class="body-cases-case" :class="{'invisible': scrolling < i + 7}" ref="section" v-for="(cell, i) in cases">
           <div class="body-cases-case-body" :class="'case-body-'+i">
             <div class="body-cases-case-body-bg"></div>
-            <img class="body-cases-case-body-figure" :src="'/static/' + i + '_case.svg'">
+            <img class="body-cases-case-body-figure" :src="'static/' + i + '_case.svg'">
             <div class="body-cases-case-body-title">{{cell.title}}</div>
             <div class="body-cases-case-body-about">{{cell.about}}</div>
           </div>
@@ -75,7 +75,7 @@
 
 
     <div class="footer">
-      <img class="footer-bg" src="/static/footer_bg.svg">
+      <img class="footer-bg" src="static/footer_bg.svg">
       <div class="footer-title">Отправить запрос на сотрудничество </div>
       <div class="body-form">
         <div class="body-form-body">
@@ -85,8 +85,8 @@
         </div>
         <div class="body-form-footer">
           <div class="button body-form-footer-button">
-            <img class="button-bg" src="/static/2_button.svg">
-            <img class="button-shadow" style="right: -8px;top: -1px;" src="/static/2_shadow.svg">
+            <img class="button-bg" src="static/2_button.svg">
+            <img class="button-shadow" style="right: -8px;top: -1px;" src="static/2_shadow.svg">
             <div class="button-title">Отправить</div>
           </div>
         </div>
@@ -94,8 +94,8 @@
       <div class="footer-ready">Готовы к работе с вами:</div>
       <div class="footer-number">
         <a href="tel:87070000092" class="button footer-number-button">
-            <img class="button-bg reverse" src="/static/phone_bg.svg">
-            <img class="button-shadow reverse" style="right: -7px;top: -1px;" src="/static/phone_shadow.svg">
+            <img class="button-bg reverse" src="static/phone_bg.svg">
+            <img class="button-shadow reverse" style="right: -7px;top: -1px;" src="static/phone_shadow.svg">
             <div class="button-title footer-number-title">8 707 000 00 92</div>
           </a>
       </div>
@@ -103,8 +103,8 @@
         <div class="footer-contacts-title">help@akh.kz</div>
         <div class="footer-contacts-body">
           <a href="geo:43.2593064,76.9297241,15" class="button footer-contacts-body-button">
-            <img class="button-bg button-address" src="/static/address_bg.svg">
-            <img class="button-shadow button-address" style="bottom: -3px;" src="/static/address_shadow.svg">
+            <img class="button-bg button-address" src="static/address_bg.svg">
+            <img class="button-shadow button-address" style="bottom: -3px;" src="static/address_shadow.svg">
             <div class="button-title">г. Алматы, Достык 97 Б, 278 офис</div>
           </a>
         </div>
