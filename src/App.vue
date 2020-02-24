@@ -5,8 +5,8 @@
 
       <div class="header-main">
         <img class="header-main-bg" src="static/header_bg.svg">
-        <img class="header-main-logo" src="static/logo(1).png">
-        <img class="header-main-logo mob" src="static/logo.svg">
+        <img class="header-main-logo" src="static/logo.png">
+        <img class="header-main-logo mob" src="static/logo.png">
         <div class="header-main-title">Продвижение и автоматизация </div>
         <div class="header-main-about">для застройщиков, девелоперов и агентств недвижимости</div>
         <div class="button header-main-button" @click="comeToElem('form')">
@@ -206,7 +206,9 @@
               data
          )
          .then(res => {
-             this.sent = true;
+             this.modal0 = ''
+             this.modal1 = ''
+             this.modal2 = ''
          });
          return false
        },
@@ -340,6 +342,9 @@
   *::-webkit-scrollbar {
     background-color: $black_08;
     width: 5px;
+  }
+  input:-internal-autofill-selected{
+    background-color: transparent !important;
   }
   input[type="submit" i]{
     background-color: transparent;
