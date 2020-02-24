@@ -202,7 +202,7 @@
         data = this.toFormData(data);
         this.$axios
          .post(
-              top.location+ "mail.php",
+              "mail.php",
               data
          )
          .then(res => {
