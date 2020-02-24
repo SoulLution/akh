@@ -38,7 +38,7 @@
       </div>
 
       <!-- @submint.prevent="sendEmail" -->
-      <form class="body-form" ref="form" action="mail.php">
+      <form class="body-form" ref="form" method="post" action="mail.php">
         <div class="body-form-header">
           <div class="body-form-header-title">А еще мы можем просто проконсультировать вас по любому вопросу</div>
           <img class="body-form-header-figure" src="static/form_bg.svg">
