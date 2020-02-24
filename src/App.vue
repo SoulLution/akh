@@ -410,7 +410,7 @@
         // max-height: 80vh;
         &-bg{
           position: absolute;
-          z-index: 0;
+          z-index: -1;
           width: 100%;
           min-width: 1296px;
         }
@@ -418,7 +418,7 @@
           color: $main_font;
           font-size: 40px;
           font-weight: bold;
-          margin-bottom: 56px;
+          width: 27.5%;
           &.mob{
             display: none !important;
           }
