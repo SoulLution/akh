@@ -37,8 +37,7 @@
         </div>
       </div>
 
-      <!-- @submint.prevent="sendEmail" -->
-      <form class="body-form" ref="form" method="post" action="mail.php">
+      <form class="body-form" ref="form" @submint.prevent="sendEmail">
         <div class="body-form-header">
           <div class="body-form-header-title">А еще мы можем просто проконсультировать вас по любому вопросу</div>
           <img class="body-form-header-figure" src="static/form_bg.svg">
@@ -89,7 +88,7 @@
           <div class="button body-form-footer-button">
             <img class="button-bg" src="static/2_button.svg">
             <img class="button-shadow" style="right: -8px;top: -1px;" src="static/2_shadow.svg">
-            <input id="submit2" type="submit" class="button-title" value="Отправить">
+            <input id="submit2" type="submit" class="button-title" value="Отправить" @click="sendEmail">
           </div>
         </label>
       </form>
@@ -198,8 +197,9 @@
         let data = {
           name: this.modal0,
           phone: this.modal1,
-          question: this.modal2,
+          question: this.modal2
         }
+        data = this.toFormData(data);
         this.$axios
          .post(
               top.location+ "mail.php",
@@ -210,6 +210,13 @@
          });
          return false
        },
+      toFormData: function(obj) {
+        let formData = new FormData();
+        for(let key in obj) {
+            formData.append(key, obj[key]);
+        }
+        return formData;
+      },
       comeToElem(ref, index){
         let top
         if(index || index === 0)
