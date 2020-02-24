@@ -5,7 +5,8 @@
 
       <div class="header-main">
         <img class="header-main-bg" src="static/header_bg.svg">
-        <img class="header-main-logo" src="static/logo.svg">
+        <img class="header-main-logo" src="static/logo(1).svg">
+        <img class="header-main-logo mob" src="static/logo.svg">
         <div class="header-main-title">Продвижение и автоматизация </div>
         <div class="header-main-about">для застройщиков, девелоперов и агентств недвижимости</div>
         <div class="button header-main-button" @click="comeToElem('form')">
@@ -405,6 +406,9 @@
           font-size: 40px;
           font-weight: bold;
           margin-bottom: 56px;
+          &.mob{
+            display: none !important;
+          }
         }
         &-title{
           color: $green;
@@ -790,6 +794,12 @@
 
 
 @media all and (max-width: 768px){
+  .header-logo{
+    display: none;
+    &.mob{
+      display: flex !important;
+    }
+  }
   .header-main{
     margin: 10px 0 188px;
     width: 100%;
