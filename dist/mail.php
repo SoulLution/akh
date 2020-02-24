@@ -2,6 +2,7 @@
 echo "Hello World";
 $to = 'faun1605@gmail.com';
 
+echo var_dump($_POST);
 echo $_POST['name'];
 echo $_POST['phone'];
 echo $_POST['question'];
