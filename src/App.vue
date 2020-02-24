@@ -405,7 +405,7 @@
         overflow: hidden;
         margin: 10px 72px 188px;
         width: calc(100% - 144px);
-        height: 695px;
+        min-height: 695px;
         min-width: 1296px;
         // max-height: 80vh;
         &-bg{
