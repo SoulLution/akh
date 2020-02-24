@@ -5,7 +5,7 @@
 
       <div class="header-main">
         <img class="header-main-bg" src="static/header_bg.svg">
-        <img class="header-main-logo" src="static/logo(1).svg">
+        <img class="header-main-logo" src="static/logo(1).png">
         <img class="header-main-logo mob" src="static/logo.svg">
         <div class="header-main-title">Продвижение и автоматизация </div>
         <div class="header-main-about">для застройщиков, девелоперов и агентств недвижимости</div>
@@ -316,7 +316,7 @@
     align-items: center;
     text-align: center;
   }
-  div, label, a{
+  div, label, a, form{
     display: flex;
     width: 100%;
     max-width: 100vw;
@@ -802,14 +802,8 @@
 
 
 @media all and (max-width: 768px){
-  .header-logo{
-    display: none;
-    &.mob{
-      display: flex !important;
-    }
-  }
   .header-main{
-    margin: 10px 0 188px;
+    margin: 10px 0 50px;
     width: 100%;
     padding: 0 15px;
     min-width: 100%;
@@ -823,6 +817,10 @@
     }
     &-logo{
       width: 80%;
+      display: none;
+      &.mob{
+        display: flex !important;
+      }
     }
     &-title{
       font-size: 32px;
@@ -940,6 +938,7 @@
         left: 0;
         width: auto;
         font-size: 24px;
+        margin: 50px 0 0;
       }
     }
     &-contacts-body{
