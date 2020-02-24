@@ -1,4 +1,5 @@
 <?php
+echo "Hello World";
 $to = 'faun1605@gmail.com';
 
 $subject = 'Testing mail';

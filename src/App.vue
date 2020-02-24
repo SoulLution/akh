@@ -285,7 +285,7 @@
 
   @font-face {
     font-family: "Yeseva_One";
-    src: url('/static/fonts/Yeseva_One.ttf.ttf') format("truetype");
+    src: url('/static/fonts/Yeseva_One.ttf') format("truetype");
   }
   @mixin yeseva {
     font-family: "Yeseva_One" ;
