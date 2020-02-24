@@ -1,6 +1,12 @@
 <template>
   <div class="main">
-  
+    <div class="popup" v-if="popup">
+      <div class="popup-bg" @click="type !== undefined ? popup = false : ''"></div>
+      <div class="popup-content">
+        <div class="popup-content-message" :class="{'success': type === true,'error': type === false,'await': type === undefined}">{{message}}</div>
+        <div class="popup-content-button" @click="type !== undefined ? popup = false : ''">Закрыть</div>
+      </div>
+    </div>
     <div class="header">
 
       <div class="header-main">
@@ -43,8 +49,8 @@
           <img class="body-form-header-figure" src="static/form_bg.svg">
         </div>
         <div class="body-form-body">
-          <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input required v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" name="name" type="text"></label>
-          <label for="i1" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input required v-model="modal1" id="i1" @focus="changeForm(1)" @blur="changeForm(1)" name="phone" type="text"></label>
+          <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input autocomplete="off" required v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" name="name" type="text"></label>
+          <label for="i1" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input autocomplete="off" required v-model="modal1" id="i1" @focus="changeForm(1)" @blur="changeForm(1)" name="phone" type="text"></label>
           <label for="i2" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea required v-model="modal2" id="i2" @focus="changeForm(2)" name="question" @blur="changeForm(2)"></textarea></label>
         </div>
         <label for="submit1" class="body-form-footer" ref="section" v-for="i in 1">
@@ -80,8 +86,8 @@
       <div class="footer-title">Отправить запрос на сотрудничество </div>
       <form class="body-form" @submint.prevent="sendEmail">
         <div class="body-form-body">
-          <label for="i3" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input required v-model="modal0" id="i3" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
-          <label for="i4" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input required v-model="modal1" id="i4" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
+          <label for="i3" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input autocomplete="off" required v-model="modal0" id="i3" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
+          <label for="i4" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input autocomplete="off" required v-model="modal1" id="i4" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
           <label for="i5" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea required v-model="modal2" id="i5" @focus="changeForm(2)" @blur="changeForm(2)"></textarea></label>
         </div>
         <label for="submit2" class="body-form-footer">
@@ -128,6 +134,10 @@
         modal1: '',
         modal2: '',
         scrolling: -1,
+        popup: false,
+        type: undefined,
+        message: '',
+
         data: [
           {
             title: 'Готовим ЖК для выхода на продажу ',
@@ -192,32 +202,40 @@
       }
     },
     methods: {
+      popupMessage(e){
+        this.type = e
+        if(e === false)
+          this.message = 'Ой! Что-то пошло не так, попробуйте повторить запрос позже.'
+        else if(e === true)
+          this.message = 'Ваш запрос обрабатывается, в ближайшее время с вами свяжется консультант.'
+        else
+          this.message = 'Пожалуйста, подождите, пока ваш запрос отправится.'
+        this.popup = true
+      },
       sendEmail(e){
         e.preventDefault();
+        this.popupMessage(undefined)
         let data = {
-          name: this.modal0,
+          fio: this.modal0,
           phone: this.modal1,
-          question: this.modal2
+          question: this.modal2,
+          _replyto: 'help@akh.kz'
         }
-        data = this.toFormData(data);
         this.$axios
          .post(
-              "mail.php",
+              "https://formspree.io/mzbgbolj",
               data
          )
          .then(res => {
-             this.modal0 = ''
-             this.modal1 = ''
-             this.modal2 = ''
-         });
-         return false
-       },
-      toFormData: function(obj) {
-        let formData = new FormData();
-        for(let key in obj) {
-            formData.append(key, obj[key]);
-        }
-        return formData;
+            this.modal0 = ''
+            this.modal1 = ''
+            this.modal2 = ''
+            this.popupMessage(true)
+         })
+         .catch(err => {
+            this.popupMessage(false)
+         })
+       return false
       },
       comeToElem(ref, index){
         let top
@@ -350,6 +368,54 @@
     background-color: transparent;
     border: unset;
     outline: none;
+  }
+
+  .popup{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    &-bg{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: #00000080;
+    }
+    &-content{
+      border-radius: 10px;
+      background-color: $white;
+      width: 80%;
+      padding: 2.5%;
+      max-width: 400px;
+      &-message{
+        color: $black;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 5%;
+        &.success{
+          color: #00ca1c;
+        }
+        &.error{
+          color: #ff2b2b;
+        }
+        &.await{
+          color: #888888;
+        }
+      }
+      &-button{
+        color: $black;
+        border: 1px solid $black;
+        border-radius: 50px;
+        cursor: pointer;
+        width: auto;
+        padding: 12px 32px;
+      }
+    }
   }
 
   .main{
