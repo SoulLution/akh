@@ -919,6 +919,9 @@
   }
 
   .footer{
+    &-title{
+      margin: 50px 0 0;
+    }
     &-ready{
       font-size: 30px;
       margin-left: 5px;
@@ -938,7 +941,6 @@
         left: 0;
         width: auto;
         font-size: 24px;
-        margin: 50px 0 0;
       }
     }
     &-contacts-body{
