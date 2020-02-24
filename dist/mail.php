@@ -2,6 +2,11 @@
 echo "Hello World";
 $to = 'faun1605@gmail.com';
 
+echo $_POST['name'];
+echo $_POST['phone'];
+echo $_POST['question'];
+echo $_REQUEST['name'];
+
 $subject = 'Testing mail';
 
 $message = '
@@ -26,16 +31,13 @@ $message = '
 </html>
 ';
 
-// To send HTML mail, the Content-type header must be set
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
-// Additional headers
 $headers[] = 'To: Administrator <faun1605@gmail.com>,';
 $headers[] = 'From: AKH Landing <faun1605@gmail.com>';
 $headers[] = 'Cc: faun1605@gmail.com';
 $headers[] = 'Bcc: faun1605@gmail.com';
 
-// Mail it
 mail($to, $subject, $message, implode("\r\n", $headers));
 ?>
