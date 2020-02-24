@@ -44,9 +44,9 @@
           <img class="body-form-header-figure" src="static/form_bg.svg">
         </div>
         <div class="body-form-body">
-          <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input required v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
-          <label for="i1" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input required v-model="modal1" id="i1" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
-          <label for="i2" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea required v-model="modal2" id="i2" @focus="changeForm(2)" @blur="changeForm(2)"></textarea></label>
+          <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input required v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" name="name" type="text"></label>
+          <label for="i1" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input required v-model="modal1" id="i1" @focus="changeForm(1)" @blur="changeForm(1)" name="phone" type="text"></label>
+          <label for="i2" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea required v-model="modal2" id="i2" @focus="changeForm(2)" name="question" @blur="changeForm(2)"></textarea></label>
         </div>
         <label for="submit1" class="body-form-footer" ref="section" v-for="i in 1">
           <div class="button body-form-footer-button">
@@ -89,7 +89,7 @@
           <div class="button body-form-footer-button">
             <img class="button-bg" src="static/2_button.svg">
             <img class="button-shadow" style="right: -8px;top: -1px;" src="static/2_shadow.svg">
-            <input type="submit2" class="button-title" value="Отправить">
+            <input id="submit2" type="submit" class="button-title" value="Отправить">
           </div>
         </label>
       </form>
