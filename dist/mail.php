@@ -1,37 +1,26 @@
 <?php
-echo "Hello World";
 $to = 'faun1605@gmail.com';
 
-echo var_dump($_POST);
-echo $_POST['name'];
-echo $_POST['phone'];
-echo $_POST['question'];
-echo $_REQUEST['name'];
+$name = $_POST['name'];
+$phone = $_POST['phone'];
+$question = $_POST['question'];
 
-$subject = 'Testing mail';
+$subject = 'Заявка с сайта akh.kz';
 
 $message = '
 <html>
 <head>
-  <title>Testing mail</title>
+  <title>Заявка с сайта <a href="http://akh.kz/">akh.kz</a></title>
 </head>
 <body>
-  <p>Here are the birthdays upcoming in August!</p>
-  <table>
-    <tr>
-      <th>Person</th><th>Day</th><th>Month</th><th>Year</th>
-    </tr>
-    <tr>
-      <td>Johny</td><td>10th</td><td>August</td><td>1970</td>
-    </tr>
-    <tr>
-      <td>Sally</td><td>17th</td><td>August</td><td>1973</td>
-    </tr>
-  </table>
+  <p>ФИО: $name</p>
+  <p>Телефон:$phone</p>
+  <p>Вопрос: $question</p>
 </body>
 </html>
 ';
 
+echo $message;
 $headers[] = 'MIME-Version: 1.0';
 $headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
