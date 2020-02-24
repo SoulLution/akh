@@ -36,24 +36,24 @@
         </div>
       </div>
 
-      <div class="body-form" ref="form">
+      <form class="body-form" ref="form" @submint.prevent="sendEmail">
         <div class="body-form-header">
           <div class="body-form-header-title">А еще мы можем просто проконсультировать вас по любому вопросу</div>
           <img class="body-form-header-figure" src="static/form_bg.svg">
         </div>
         <div class="body-form-body">
-          <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
-          <label for="i1" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Компания</div> <input v-model="modal1" id="i1" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
-          <label for="i2" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea v-model="modal2" id="i2" @focus="changeForm(2)" @blur="changeForm(2)"></textarea></label>
+          <label for="i0" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input required v-model="modal0" id="i0" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
+          <label for="i1" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input required v-model="modal1" id="i1" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
+          <label for="i2" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea required v-model="modal2" id="i2" @focus="changeForm(2)" @blur="changeForm(2)"></textarea></label>
         </div>
-        <div class="body-form-footer" ref="section" v-for="i in 1">
+        <label for="submit1" class="body-form-footer" ref="section" v-for="i in 1">
           <div class="button body-form-footer-button">
             <img class="button-bg reverse" src="static/1_button.svg">
             <img class="button-shadow reverse" style="right: -7px;top: -2px;" src="static/1_shadow.svg">
-            <div class="button-title">Отправить</div>
+            <input id="submit1" type="submit" class="button-title" value="Отправить" @click="sendEmail">
           </div>
-        </div>
-      </div>
+        </label>
+      </form>
 
       <div class="body-cases">
         <div class="body-cases-title">
@@ -77,20 +77,20 @@
     <div class="footer">
       <img class="footer-bg" src="static/footer_bg.svg">
       <div class="footer-title">Отправить запрос на сотрудничество </div>
-      <div class="body-form">
+      <form class="body-form" @submint.prevent="sendEmail">
         <div class="body-form-body">
-          <label for="i3" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input v-model="modal0" id="i3" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
-          <label for="i4" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Компания</div> <input v-model="modal1" id="i4" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
-          <label for="i5" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea v-model="modal2" id="i5" @focus="changeForm(2)" @blur="changeForm(2)"></textarea></label>
+          <label for="i3" class="body-form-body-input" :class="{ 'active': form0 || modal0 }"><div>Имя</div> <input required v-model="modal0" id="i3" @focus="changeForm(0)" @blur="changeForm(0)" type="text"></label>
+          <label for="i4" class="body-form-body-input" :class="{ 'active': form1 || modal1}"><div>Телефон</div> <input required v-model="modal1" id="i4" @focus="changeForm(1)" @blur="changeForm(1)" type="text"></label>
+          <label for="i5" class="body-form-body-input __full" :class="{ 'active': form2 || modal2}"><div>Напишите свой вопрос</div> <textarea required v-model="modal2" id="i5" @focus="changeForm(2)" @blur="changeForm(2)"></textarea></label>
         </div>
-        <div class="body-form-footer">
+        <label for="submit2" class="body-form-footer">
           <div class="button body-form-footer-button">
             <img class="button-bg" src="static/2_button.svg">
             <img class="button-shadow" style="right: -8px;top: -1px;" src="static/2_shadow.svg">
-            <div class="button-title">Отправить</div>
+            <input type="submit2" class="button-title" value="Отправить">
           </div>
-        </div>
-      </div>
+        </label>
+      </form>
       <div class="footer-ready">Готовы к работе с вами:</div>
       <div class="footer-number">
         <a href="tel:87070000092" class="button footer-number-button">
@@ -177,20 +177,37 @@
       }
     },
     created(){
-        window.onscroll = () => {
-          let height = document.scrollingElement.clientHeight
-          for(let i = this.$refs['section'].length - 1; i >= 0 ; i--){
-            let top = this.$refs['section'][i].getBoundingClientRect().top
-            let elem = top - height + ( i > 6 ? (height - 50) : (height / 3))
-            if(elem <= 0){
-              this.scrolling = i;
-              break;
-            }
-            if(i === 0) this.scrolling = -1;
+      window.onscroll = () => {
+        let height = document.scrollingElement.clientHeight
+        for(let i = this.$refs['section'].length - 1; i >= 0 ; i--){
+          let top = this.$refs['section'][i].getBoundingClientRect().top
+          let elem = top - height + ( i > 6 ? (height - 50) : (height / 3))
+          if(elem <= 0){
+            this.scrolling = i;
+            break;
           }
+          if(i === 0) this.scrolling = -1;
         }
+      }
     },
     methods: {
+      sendEmail(e){
+        e.preventDefault();
+        let data = {
+          name: this.modal0,
+          phone: this.modal1,
+          question: this.modal2,
+        }
+        this.$axios
+         .post(
+              top.location+ "mail.php",
+              data
+         )
+         .then(res => {
+             this.sent = true;
+         });
+         return false
+       },
       comeToElem(ref, index){
         let top
         if(index || index === 0)
@@ -307,14 +324,19 @@
   img{
     user-select: none;
   }
-*::-webkit-scrollbar-thumb{
-  background-color: $blue;
-  cursor: pointer;
-}
-*::-webkit-scrollbar {
-  background-color: $black_08;
-  width: 5px;
-}
+  *::-webkit-scrollbar-thumb{
+    background-color: $blue;
+    cursor: pointer;
+  }
+  *::-webkit-scrollbar {
+    background-color: $black_08;
+    width: 5px;
+  }
+  input[type="submit" i]{
+    background-color: transparent;
+    border: unset;
+    outline: none;
+  }
 
   .main{
     background-color: $white;
@@ -767,7 +789,7 @@
     }
 
 
-@media screen and (max-width: 768px){
+@media all and (max-width: 768px){
   .header-main{
     margin: 10px 0 188px;
     width: 100%;
