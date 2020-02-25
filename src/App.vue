@@ -1047,6 +1047,12 @@
         }
       }
     }
+    &-cases-title{
+      margin-bottom: 5rem;
+    }
+    &-form-footer{
+      margin-bottom: 5rem;
+    }
   }
 }
 
