@@ -215,15 +215,15 @@
       sendEmail(e){
         e.preventDefault();
         this.popupMessage(undefined)
-        let data = JSON.parse({
-          fio: this.modal0,
+        let data = JSON.stringify({
+          name: this.modal0,
           phone: this.modal1,
           question: this.modal2,
           _replyto: 'help@akh.kz'
         })
         this.$axios
          .post(
-              "mail.php",
+              "http://akh.kz/mail.php",
               data
          )
          .then(res => {
