@@ -4,10 +4,10 @@ ini_set('display_errors', 'On');
 
 $to = 'help@akh.kz';
 
+echo var_dump($_POST['fio']);
 $fio = $_POST['fio'];
 $phone = $_POST['phone'];
 $question = $_POST['question'];
-echo $fio
 $subject = 'Заявка с сайта akh.kz';
 
 $message = '
@@ -23,7 +23,7 @@ $message = '
 </html>
 ';
 
-$headers =  'MIME-Version: 1.0'. "\r\n" .'Content-type: text/html; charset=utf-8'. "\r\n" .'From: <help@akh.kz>';
+$headers =  'MIME-Version: 1.0'. "\r\n" .'Content-type: text/html; charset=utf-8'. "\r\n" .'From: <info@akh.kz>';
 mail($to, $subject, $message);
 if(mail($to, $subject, $message, $headers))
 {

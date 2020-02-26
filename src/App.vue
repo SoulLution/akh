@@ -215,15 +215,16 @@
       sendEmail(e){
         e.preventDefault();
         this.popupMessage(undefined)
-        let data = JSON.stringify({
-          name: this.modal0,
+        let data = {
+          fio: this.modal0,
           phone: this.modal1,
           question: this.modal2,
           _replyto: 'help@akh.kz'
-        })
+        }
+        data = this.changeForm(data)
         this.$axios
          .post(
-              "http://akh.kz/mail.php",
+              "mail.php",
               data
          )
          .then(res => {
@@ -236,6 +237,13 @@
             this.popupMessage(false)
          })
        return false
+      },
+      changeForm(data){
+        let formData = new FormData()
+        data.forEach(key => {
+          formData.append(key, data[key])
+        })
+        return formData
       },
       comeToElem(ref, index){
         let top
