@@ -221,7 +221,7 @@
           question: this.modal2,
           _replyto: 'help@akh.kz'
         }
-        data = this.changeForm(data)
+        data = this.changeData(data)
         this.$axios
          .post(
               "mail.php",
@@ -238,11 +238,12 @@
          })
        return false
       },
-      changeForm(data){
+      changeData(data){
         let formData = new FormData()
-        data.forEach(key => {
+        Object.keys(data).forEach(key => {
           formData.append(key, data[key])
         })
+        console.log(formData)
         return formData
       },
       comeToElem(ref, index){
