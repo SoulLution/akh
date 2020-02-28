@@ -9,8 +9,9 @@
     </div>
     <div class="header">
 
+      <img class="header-bg" src="static/header_bg.svg">
+      
       <div class="header-main">
-        <img class="header-main-bg" src="static/header_bg.svg">
         <img class="header-main-logo" src="static/logo.png">
         <img class="header-main-logo mob" src="static/logo.png">
         <div class="header-main-title">Продвижение и автоматизация </div>
@@ -25,6 +26,13 @@
         </div>
       </div>
 
+      <div class="header-animations">
+
+        <div class="header-animations-child" v-for="i in 3">
+          <div class="header-animations-child-item" :style="{backgroundImage: `url(/static/${j}.jpg)`, animationDelay: (j * (i / 5)) + 's'}" v-for="j in 5"></div>
+        </div>
+        
+      </div>
 
     </div>
 
@@ -35,11 +43,14 @@
 
 
       <div class="body-section" ref="section" :class="{ 'reverse': i % 2 !== 0, 'invisible': scrolling < i }" v-for="(sector, i) in data">
-        <img class="body-section-img" :style="{marginLeft: i === 4 ? '10%' : 0, maxWidth: i === 4 ? '391px' : '50%'}" :src="'static/' + i + '.jpg'">
+        <img class="body-section-img" :style="{marginLeft: i === 4 ? '10%' : 0, maxWidth: i === 4 || i === 6 ? '391px' : '50%'}" :src="'static/' + i + '.jpg'">
         <div class="body-section-content">
+
         <img class="body-section-content-figure" :style="{animation:('sprinkle-wiggle-' + i + ' 5s ease-in-out infinite')}" :src="'static/' + i + '.svg'" @mouseover="e=>{ setAnim(e, i) }">
+        <img class="body-section-content-figure mob" :style="{animation:('sprinkle-wiggle-' + i + ' 5s ease-in-out infinite')}" :src="'static/' + i + '_mob.svg'" @mouseover="e=>{ setAnim(e, i) }">
+
           <div class="body-section-content-title">{{sector.title}}</div>
-          <div class="body-section-content-about">{{sector.about}}</div>
+          <div class="body-section-content-about" v-html="sector.about"></div>
         </div>
       </div>
 
@@ -69,6 +80,7 @@
         </div>
         <div class="body-cases-case" :class="{'invisible': scrolling < i + 7}" ref="section" v-for="(cell, i) in cases">
           <div class="body-cases-case-body" :class="'case-body-'+i">
+          <img class="body-cases-case-logotip" :class="'logotip-' + i" :src="'static/case_logo_' + i + '.png'">
             <div class="body-cases-case-body-bg"></div>
             <img class="body-cases-case-body-figure" :src="'static/' + i + '_case.svg'">
             <div class="body-cases-case-body-title">{{cell.title}}</div>
@@ -165,7 +177,7 @@
           },
           {
             title: 'Внедряем отчётность по метрикам ',
-            about: 'Стоимость лида, стоимость брони, стоимость продажи. Процент некачественных лидов, процент зависших сделок и еще 67 метрик для отдела продаж и маркетинга.  Рост прибыли в итоге достигается тем, что поддержка продаж ориентируется на данные (Data-driven), а не на теории или голые идеи.'
+            about: 'Стоимость лида, стоимость брони, стоимость продажи. Процент некачественных лидов, процент зависших сделок и еще 67 метрик для отдела продаж и маркетинга.  Рост прибыли в итоге достигается тем, что <span>поддержка продаж ориентируется на данные (Data-driven)</span>, а не на теории или голые идеи.'
           },
         ],
         cases: [
@@ -243,7 +255,6 @@
         Object.keys(data).forEach(key => {
           formData.append(key, data[key])
         })
-        console.log(formData)
         return formData
       },
       comeToElem(ref, index){
@@ -285,7 +296,7 @@
   $white: #ffffff;
   $grey: #F2F2F2;
   $grey_border: #E0E0E0;
-  $black: #1F1F1F;
+  $black: #000000;
   $black_08: rgba(0,0,0,0.08);
   
   $green: #219653;
@@ -401,10 +412,11 @@
       padding: 2.5%;
       max-width: 400px;
       &-message{
+        font-size: 16px;
         color: $black;
         font-weight: bold;
         font-size: 16px;
-        line-height: 20px;
+        line-height: 150%;
         margin-bottom: 5%;
         &.success{
           color: #00ca1c;
@@ -474,465 +486,650 @@
     }
   }
   
-    .header{
-
-      &-main{
-        overflow: hidden;
-        margin: 10px 72px 188px;
-        width: calc(100% - 144px);
-        min-height: 695px;
-        min-width: 1296px;
-        // max-height: 80vh;
-        &-bg{
-          position: absolute;
-          z-index: -1;
-          width: 100%;
-          min-width: 1296px;
+  .header{
+    flex-direction: row;
+    align-items: flex-start;
+    &-bg{
+      position: absolute;
+      z-index: 0;
+      width: 100%;
+      min-width: 1296px;
+      // max-height: calc(100vh - 60px);
+    }
+    &-animations{
+      height: 100%;
+      width: 50%;
+      min-height: 695px;
+      flex-direction: column;
+      margin-top: -10%;
+      justify-content: flex-start;
+      z-index: 0;
+      &-child{
+        flex-direction: row;
+        width: auto;
+        max-width: unset;
+        transform: rotate(25deg);
+        margin: 15vh 24px 0;
+        position: absolute;
+        transiyion: 0.3s;
+        &:nth-child(1){
+          margin-top: 10%;
+          right: -25%;
+          animation: image-1 2s ease-in-out 1; 
         }
-        &-logo{
-          color: $main_font;
-          font-size: 40px;
-          font-weight: bold;
-          width: 27.5%;
-          &.mob{
-            display: none !important;
-          }
+        &:nth-child(2){
+          margin-top: 30%;
+          right: -10%;
+          animation: image-2 1s ease-in-out 1; 
         }
-        &-title{
-          color: $green;
-          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-          font-size: 55px;
-          font-weight: bold;
-          margin-bottom: 28px;
-          @include gotham();
+        &:nth-child(3){
+          margin-top: 100%;
+          right: -100%;
+          animation: image-3 1s ease-in-out 1; 
         }
-        &-about{
-          margin-bottom: 72px;
-          font-size: 24px;
-          line-height: 29px;
-
-        }
-         &-button{ 
-          margin-bottom: 58px;
-         }
-        &-down{
-          cursor: pointer;
-          height: 80px;
-          width: 80px;
-          border-radius: 50%;
-          border: 1px solid transparent;
-          &-side{
-            height: 40px;
-            width: 40px;
-            margin-top: -20px;
-            border-color: $grey_border;
-            border-style: solid;
-            border-bottom: 5px;
-            border-left: 5px;
-            transform: rotate(135deg);
-          }
-          &:hover{
-            border-color: $blue_l;
-          }
-          &:active{
-            background-color: $blue;
-          }
+        &-item{
+          border-radius: 5px;
+          height: 12.5vw;
+          transform: skewX(25deg);
+          background-color: red;
+          background-image: url(/static/0.jpg);
+          background-position: -12.5% -12.5% !important;
+          // background-repeat: no-repeat !important;
+          background-size: 125% 125% !important;
+          animation: image-wiggle 7s ease-in-out infinite;
+          // background-attachment: fixed !important;
+          width: 15vw;
+          max-height: 140px;
+          max-width: 250px;
+          margin: 24px;
         }
       }
     }
-
-    .body{
-      margin-bottom: 100px;
-      &-side{
-        position: absolute;
-        z-index: 0;
-        top: 218px;
-        animation:background-wiggle 7s ease-in-out infinite;
-        user-select: none;
-        pointer-events: none;
+    &-main{
+      z-index: 1;
+      align-items: flex-start;
+      margin-bottom: 188px;
+      padding: 4% 0 4% 7.5%;
+      width: 55%;
+      // min-height: 695px;
+      min-height: 100vh;
+      // min-width: 1296px;
+      &-logo{
+        margin-bottom: 25px;
+        font-weight: bold;
+        width: 33.3%;
+        max-width: 158px;
+        &.mob{
+          display: none !important;
+        }
       }
-      &-section{
-        flex-direction: row;
-        justify-content: flex-end;
-        margin: 100px 0;
+      &-title{
+        color: $main_font;
+        text-align: left;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-size: 55px;
+        line-height: 66px;
+        font-weight: bold;
+        margin-bottom: 28px;
+        @include gotham();
+      }
+      &-about{
+        text-align: left;
+        margin-bottom: 36px;
+        line-height: 147.6%;
+        font-size: 24px;
+
+      }
+       &-button{ 
+        margin-bottom: 58px;
+        width: 80%;
+       }
+      &-down{
+        cursor: pointer;
+        z-index: 1;
+        height: 60px;
+        width: 60px;
+        position: absolute;
+        bottom: 0;
+        right: -20px;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        &-side{
+          height: 40px;
+          width: 40px;
+          margin-top: -20px;
+          border-color: $grey_border;
+          border-style: solid;
+          border-bottom: 5px;
+          border-left: 5px;
+          transform: rotate(135deg);
+        }
+      }
+    }
+  }
+
+  .body{
+    margin-bottom: 100px;
+    &-side{
+      position: absolute;
+      z-index: 0;
+      top: 218px;
+      animation:background-wiggle 7s ease-in-out infinite;
+      user-select: none;
+      pointer-events: none;
+    }
+    &-section{
+      flex-direction: row;
+      justify-content: flex-end;
+      margin: 100px 0;
+      transition: 0.3s;
+      padding: 125px 0;
+      &-img{
+        max-width: 50%;
+        width: 100%;
         transition: 0.3s;
-        padding: 125px 0;
-        &-img{
-          max-width: 50%;
-          width: 100%;
-          transition: 0.3s;
+        position: absolute;
+        left: 0;
+      }
+      &-content{
+        max-width: 490px;
+        margin: 0 0 0 80px;
+        width: 75vw;
+        &-figure{
+          transition: 0.5s;
           position: absolute;
+          top: -20%;
           left: 0;
-        }
-        &-content{
-          max-width: 490px;
-          margin: 0 0 0 80px;
-          width: 75vw;
-          &-figure{
-            transition: 0.5s;
-            position: absolute;
-            top: -20%;
-            left: 0;
-            // animation:sprinkle-wiggle 5s ease-in-out infinite;
-            animation-delay: .3s;
-            animation-direction: reverse;
-            transform: scale(1) rotate(0);
+          // animation:sprinkle-wiggle 5s ease-in-out infinite;
+          animation-delay: .3s;
+          animation-direction: reverse;
+          transform: scale(1) rotate(0deg);
+          &.mob{
+            display: none;
           }
-          &-title{
-            transition: 0.3s;
+        }
+        &-title{
+          transition: 0.3s;
+          font-weight: bold;
+          font-size: 24px;
+          margin-bottom: 18px;
+          text-align: left;
+          line-height: 150%;
+          white-space: normal;
+        }
+        &-about{
+          display: block;
+          transition: 0.3s;
+          font-size: 18px;
+          text-align: left;
+          line-height: 150%;
+          &>span{
             font-weight: bold;
-            font-size: 24px;
-            margin-bottom: 18px;
-            text-align: left;
-            line-height: 150%;
-            white-space: normal;
-          }
-          &-about{
-            transition: 0.3s;
-            font-size: 18px;
-            text-align: left;
-            line-height: 150%;
           }
         }
-        &.reverse{
-          justify-content: flex-start;
-          .body-section-img{
-            right: 0;
-            left: unset;
-          }
-          &.invisible{
-            .body-section-img{
-              right: -10% !important;
-              left: unset !important;
-            }
-          }
+      }
+      &.reverse{
+        justify-content: flex-start;
+        .body-section-img{
+          right: 0;
+          left: unset;
         }
         &.invisible{
           .body-section-img{
-            margin-left: 0 !important;
-            left: -10% !important;
-            opacity: 0.2;
+            right: -10% !important;
+            left: unset !important;
           }
-          .body-section-content{
-            // margin-left: 100% !important;
-            // opacity: 0;
+        }
+      }
+      &.invisible{
+        .body-section-img{
+          margin-left: 0 !important;
+          left: -10% !important;
+          opacity: 0.2;
+        }
+        .body-section-content{
+          // margin-left: 100% !important;
+          // opacity: 0;
+        }
+        .body-section-content-figure{
+          transition: 0.5s;
+          opacity: 0;
+          transform: scale(1) rotate(360deg);
+          animation: unset !important;
+        }
+        .body-section-content-title{
+          transform: scale(0);
+        }
+        .body-section-content-about{
+          transform: scale(0);
+        }
+
+      }
+    }
+    &-form{
+      width: 636px;
+      &-header{
+        padding: 0 73px;
+        &-title{
+          font-weight: 900;
+          font-size: 38px;
+          line-height: 150%;
+          font-weight: bold;
+          z-index: 1;
+        }
+        &-figure{
+          position: absolute;
+          top: -100%;
+          // width: 100vw;
+          height: 500%;
+          animation:sprinkle-wiggle 5s ease-in-out infinite;
+          animation-delay: .3s;
+          animation-direction: reverse;
+          z-index: 0;
+        }
+      }
+      &-body{
+        margin: 38px 0 56px;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 5px 0;
+        justify-content: space-between;
+        &-input{
+          padding: 20px 18px;
+          width: calc(50% - 18px);
+          margin-bottom: 20px; 
+          border: 1px solid #CED4E1;
+          border-radius: 4px;
+          background-color: $white;
+
+          &>div{
+            left: 18px;
+            top: 20px;
+            font-size: 18px;
+            width: auto;
+            position: absolute;
+            color: #828282;
+            transition: 0.3s;
+            @include sfpro();
           }
-          .body-section-content-figure{
-            transition: 0.5s;
-            transform: scale(0) rotate(160deg);
-            animation: unset !important;
+          &>input, &>textarea{
+            @include sfpro();
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+            line-height: 14px;
+            outline: none;
+            border: none;
+            color: $main_font;
+            background-color: transparent;
+            resize: none;
           }
-          .body-section-content-title{
-            transform: scale(0);
+          &.__full{
+            width: 100%;
+            height: 148px;
           }
-          .body-section-content-about{
-            transform: scale(0);
-          }
+          &.active{
+            border-color: $blue;
+              &>div{
+                font-size: 12px;
+                top: 7px;
+              }
+              &>input{
+
+              }
+            }
+        }
+      }
+      &-footer{
+        margin-bottom: 160px;
+        &-button{
 
         }
       }
-      &-form{
-        width: 636px;
-        &-header{
-          padding: 0 73px;
-          &-title{
-            font-size: 18px;
-            line-height: 150%;
-            font-weight: bold;
-            z-index: 1;
+    }
+
+    &-cases{
+      &-title{
+        margin-bottom: 262px;
+        &-font{
+          width: auto;
+          @include yeseva();
+          text-transform: uppercase;
+          text-align: center;
+          font-size: 40px;
+          line-height: 46px;
+          padding-bottom: 26px;
+          border-bottom: 3px solid $main_font;
+        }
+        &-hr{
+          width: 100%;
+          height: 3px;
+          // background-color: $main_font;
+        }
+      }
+      &-case{
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 150px;
+        &:last-child{
+          margin-bottom: 150px;
+        }
+        &:nth-child(3){
+          align-items: flex-end;
+        }
+        &-logotip{
+          position: absolute;
+          z-index: 0;
+          transition: 0.3s;
+          &.logotip-0{
+            top: -100%;
+            right: -10%;
+          }
+          &.logotip-1{
+            top: -300%;
+            right: 0%;
+           }
+          &.logotip-2{
+            transform: rotate(360deg);
+            top: 50%;
+            right: -75%;
+          }
+        }
+        &-body{
+          max-width: 565.685424949px;
+          width: calc(35vw * 1.5);
+          z-index: 1;
+          &.case-body-0{
+            margin-left: 5vw;
+          }
+          &.case-body-1{
+            margin-right: 5vw;
+          }
+          &.case-body-2{
+            margin-left: 10vw;
+          }
+          &-bg{
+            max-width: 400px;
+            width: 35vw;
+            max-height: 400px;
+            height: 35vw;
+            position: absolute;
+            background-color: $grey;
+            transform: rotate(45deg);
+            z-index: 0;
+            left: 80px;
+            transition: 0.7s;
           }
           &-figure{
             position: absolute;
-            top: -40%;
-            animation:sprinkle-wiggle 5s ease-in-out infinite;
+            top: -20%;
+            right: 120px;
+            animation: sprinkle-wiggle 5s ease-in-out infinite;
             animation-delay: .3s;
             animation-direction: reverse;
-            z-index: 0;
+            transition: 0.5s;
+          }
+          &-title{
+            text-align: left;
+            align-items: flex-start;
+            color: $black;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 28px;
+            transition: 0.3s;
+            margin-bottom: 40px;
+          }
+          &-about{
+            text-align: left;
+            color: $black;
+            font-size: 18px;
+            line-height: 150%;
+            transition: 0.3s;
           }
         }
-        &-body{
-          margin: 38px 0 56px;
-          flex-wrap: wrap;
-          flex-direction: row;
-          padding: 5px 0;
-          justify-content: space-between;
-          &-input{
-            padding: 20px 18px;
-            width: calc(50% - 18px);
-            margin-bottom: 20px; 
-            border: 1px solid #CED4E1;
-            border-radius: 4px;
-            background-color: $white;
+        &.invisible{
+          .body-cases-case-logotip{
+            opacity: 0;
+            transform: rotate(360deg);
+          }
+          .body-cases-case-body-bg{
+            transform: scale(0.5) rotate(-360deg);
+          }
+          .body-cases-case-body-figure{
+            top: 20%;
+            right: 120px;
+            animation: unset;
+            transform: scale(0.5);
+          }
+          .body-cases-case-body-title{
+            transform: scale(0);
+          }
+          .body-cases-case-body-about{
+            transform: scale(0);
+          }
 
-            &>div{
-              left: 18px;
-              top: 20px;
-              font-size: 18px;
-              width: auto;
-              position: absolute;
-              color: #828282;
-              transition: 0.3s;
-              @include sfpro();
-            }
-            &>input, &>textarea{
-              @include sfpro();
-              width: 100%;
-              height: 100%;
-              font-size: 14px;
-              line-height: 14px;
-              outline: none;
-              border: none;
-              color: $main_font;
-              background-color: transparent;
-              resize: none;
-            }
-            &.__full{
-              width: 100%;
-              height: 148px;
-            }
-            &.active{
-              border-color: $blue;
-                &>div{
-                  font-size: 12px;
-                  top: 7px;
-                }
-                &>input{
-
-                }
-              }
-          }
-        }
-        &-footer{
-          margin-bottom: 160px;
-          &-button{
-
-          }
-        }
-      }
-
-      &-cases{
-        &-title{
-          margin-bottom: 262px;
-          &-font{
-            width: auto;
-            @include yeseva();
-            text-transform: uppercase;
-            text-align: center;
-            font-size: 40px;
-            line-height: 46px;
-            padding-bottom: 26px;
-            border-bottom: 3px solid $main_font;
-          }
-          &-hr{
-            width: 100%;
-            height: 3px;
-            // background-color: $main_font;
-          }
-        }
-        &-case{
-          flex-direction: column;
-          align-items: flex-start;
-          margin-bottom: 150px;
-          &:nth-child(3){
-            align-items: flex-end;
-          }
-          &-body{
-            max-width: 565.685424949px;
-            width: calc(35vw * 1.5);
-            &.case-body-0{
-              margin-left: 5vw;
-            }
-            &.case-body-1{
-              margin-right: 5vw;
-            }
-            &.case-body-2{
-              margin-left: 10vw;
-            }
-            &-bg{
-              max-width: 400px;
-              width: 35vw;
-              max-height: 400px;
-              height: 35vw;
-              position: absolute;
-              background-color: $grey;
-              transform: rotate(45deg);
-              z-index: 0;
-              left: 80px;
-              transition: 0.7s;
-            }
-            &-figure{
-              position: absolute;
-              top: -20%;
-              right: 120px;
-              animation:sprinkle-wiggle 5s ease-in-out infinite;
-              animation-delay: .3s;
-              animation-direction: reverse;
-              transition: 0.5s;
-            }
-            &-title{
-              text-align: left;
-              color: $black;
-              font-weight: bold;
-              font-size: 24px;
-              line-height: 28px;
-              transition: 0.3s;
-            }
-            &-about{
-              text-align: left;
-              color: $black;
-              font-size: 18px;
-              line-height: 150%;
-              transition: 0.3s;
-            }
-          }
-          &.invisible{
-            .body-cases-case-body-bg{
-              transform: scale(0.5) rotate(-360deg);
-            }
-            .body-cases-case-body-figure{
-              top: 20%;
-              right: 120px;
-              animation: unset;
-              transform: scale(0.5);
-            }
-            .body-cases-case-body-title{
-              transform: scale(0);
-            }
-            .body-cases-case-body-about{
-              transform: scale(0);
-            }
-
-          }
         }
       }
     }
+  }
 
-    .footer{
-      background-color: $main_font;
-      &-bg{
-        position: absolute;
-        right: 0;
-        max-width: 80vw;
-      }
+  .footer{
+    background-color: $main_font;
+    &-bg{
+      position: absolute;
+      right: 0;
+      max-width: 80vw;
+    }
+    &-title{
+      color: $white;
+      margin: 71px 0 55px;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 150%;
+    }
+    &-ready{
+      @include yeseva();
+      font-size: 3.5rem;
+      line-height: 150%;
+      color: $yellow;
+      text-align: left;
+      text-transform: uppercase;
+      align-items: flex-start;
+      margin-left: 118px;
+    }
+    &-number{
+      width: auto;
+      margin-left: 103px;
       &-title{
-        color: $white;
-        margin: 71px 0 55px;
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 150%;
-      }
-      &-ready{
-        @include yeseva();
-        font-size: 3.5rem;
-        line-height: 150%;
-        color: $yellow;
-        text-align: left;
-        text-transform: uppercase;
-        align-items: flex-start;
-        margin-left: 118px;
-      }
-      &-number{
-        margin-left: 103px;
-        align-items: flex-start;
-        &-title{
-            font-weight: bold;
-            font-size: 50px;
-            line-height: 150%;
-          }
-        &:hover{
-          .footer-number-figure{
-            animation: cta-hover 0.4s ease-in-out 1;
-          }
-        }
-        &-figure{
-
-        }
-        &-phone{
-          position: absolute;
-          left: 25px;
-          width: auto;
-          color: $white;
           font-weight: bold;
           font-size: 50px;
           line-height: 150%;
-
         }
-        &-hr{
-          max-width: 725px;
-          position: absolute;
-          left: -103px;
-          height: 2px;
-          background-color: $white;
-          bottom: -22px;
+      &:hover{
+        .footer-number-figure{
+          animation: cta-hover 0.4s ease-in-out 1;
         }
       }
-      &-contacts{
-        margin-top: 85px;
-        &-title{
-          color: $white;
-          margin-bottom: 12px;
-        }
-        &-body{
-          margin-bottom: 10px;
+      &-figure{
 
-          
-        }
+      }
+      &-phone{
+        position: absolute;
+        white-space: nowrap;
+        left: 25px;
+        width: auto;
+        color: $white;
+        font-weight: bold;
+        font-size: 50px;
+        line-height: 150%;
+
+      }
+      &-hr{
+        max-width: 725px;
+        position: absolute;
+        left: -103px;
+        height: 2px;
+        background-color: $white;
+        bottom: -22px;
       }
     }
+    &-contacts{
+      margin-top: 35px;
+      &-title{
+        color: $white;
+        margin-bottom: 12px;
+      }
+      &-body{
+        margin-bottom: 10px;
+
+        
+      }
+    }
+  }
 
 
 @media all and (max-width: 768px){
-  .header-main{
-    margin: 10px 0 50px;
-    width: 100%;
-    padding: 0 15px;
-    min-width: 100%;
-    &-button{
-      &>img{
-        width: 80%;
-        &.button-shadow{
-          right: 0 !important;
+  .header{
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    &-bg{
+      height: calc(100% + 24vw);
+    }
+    &-animations{
+      width: 100%;
+      height: auto;
+      min-height: unset;
+      margin-bottom: 80vw;
+      margin-top: -60vw;
+      &-child{
+        // animation: unset !important;
+        // position: relative;
+        &:nth-child(1){
+          display: none
+        }
+        &:nth-child(2){
+          // margin-top: 20%;
+          // right: -10%;
+        }
+        &:nth-child(3){
+          margin-top: 75%;
+          right: -50%;
+        }
+        &-item{
+          height: 20vw;
+          width: 25vw;
         }
       }
     }
-    &-logo{
-      width: 80%;
-      display: none;
-      &.mob{
-        display: flex !important;
+    &-main{
+      margin: 10px 0 50px;
+      width: 100%;
+      padding: 0 5%;
+      min-width: 100%;
+      &-button{
+        width: 100%;
+        margin-bottom: 30px;
+        &>div{
+          font-size: 18px;
+          line-height: 21px;
+          font-weight: bold;
+          width: 50%;
+          text-align: center;
+        }
+        &>img{
+          width: 90%;
+          &.button-shadow{
+            right: 0 !important;
+            width: 75%;
+          }
+        }
       }
-    }
-    &-title{
-      font-size: 32px;
-    }
-    &-about{
-      font-size: 18px;
+      &-down{
+        right: calc(50% - 30px);
+        &-side{
+          height: 20px;
+          width: 20px;
+        }
+      }
+      &-logo{
+        width: 40%;
+        display: none;
+        &.mob{
+          display: flex !important;
+        }
+      }
+      &-title{
+        font-size: 32px;
+        line-height: 38px;
+      }
+      &-about{
+        font-size: 18px;
+        line-height: 22px;
+      }
     }
   }
   .body{
-    &-section-content{
-      &-figure{
-        max-width: 66vw;
-        top: -5%;
-      }
-      &-about{
+    &-section{
+      &-content{
+        &-figure{
+          display: none;
+          // max-width: 66vw;
+          top: -5%;
+          &.mob{
+            display: flex;
+            // height: 100%;
+          }
+        }
+        &-about{
+        }
       }
     }
     &-cases-title-font{
       font-size: 24px;
     }
-    &-cases-case-body{
-      &-title{
-        font-size: 18px;
+    &-cases-case{
+      &:last-child{
+        margin-bottom: 15px;
       }
-      &-about{
-        font-size: 14px;
+      &-logotip{
+        width: 33%;
+        top: -25% !important;
+        &.logotip-0{
+          right: unset;
+          left: 0;
+        }
+        &.logotip-1{
+          right: 0%;
+        }
+        &.logotip-2{
+          right: unset;
+          left: 10%;
+          z-index: 1;
+          width: 80%;
+        }
+      }
+      &-body{
+        &-title{
+          font-size: 18px;
+          margin-bottom: unset;
+          margin-top: 15%;
+        }
+        &-about{
+          font-size: 14px;
+        }
       }
     }
     &-form{
       padding: 0 10px;
-      &-header-figure{
-        top: -20%;
+      &-header{
+        padding: 0 5px;
+        &-title{
+          font-size: 20px;
+        }
+        &-figure{
+          top: -200%;
+          height: 150vh;
+        }
       }
       &-body-input{
         width: 100%;
@@ -941,25 +1138,27 @@
   }
   .body-section{
     flex-direction: column;
-    padding: 0;
+    margin: 15px 0;
+    padding: 20vh 0;
     &-img{
-      position: relative;
-      max-width: 66vw !important;
-      margin-left: -66% !important;
+      // position: relative;
+      width: 80vw !important;
+      max-height: 100% !important;
+      margin-left: -25% !important;
     }
     &-content{
       margin-top: -15%;
-      margin-left: 35%;
-      max-width: 50vw;
+      margin-left: 17.5%;
+      max-width: 80vw;
     }
     &.reverse{
       justify-content: flex-start;
       .body-section-img{
-        margin-right: -66% !important;
+        // margin-right: -66% !important;
         margin-left: unset !important;
       }
       .body-section-content{
-        margin-right: 35% !important;
+        margin-right: 17.5% !important;
         margin-left: unset !important;
       }
     }
@@ -1000,7 +1199,11 @@
 
   .footer{
     &-title{
-      margin: 50px 0 0;
+      margin: 30px 0 0;
+      padding: 0 25px;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 150%;
     }
     &-ready{
       font-size: 30px;
@@ -1038,15 +1241,15 @@
   }
 }
 @media screen and (max-width: 601px){
-   .body{
+  .body{
     &-section{
       &-content{
         &-figure{
 
         }
         &-about{
-          width: 94vw;
-          margin-left: -32vw;
+          // width: 94vw;
+          // margin-left: -32vw;
         }
       }
       &.reverse{
@@ -1057,7 +1260,7 @@
       }
     }
     &-cases-title{
-      margin-bottom: 5rem;
+      margin-bottom: -5rem;
     }
     &-form-footer{
       margin-bottom: 5rem;
@@ -1065,88 +1268,103 @@
   }
 }
 
+//keyframes
+  @keyframes image-1{
+    from {padding-bottom: 1250%;padding-left: 250%;}
+    to {padding: 0;}
+  }
+  @keyframes image-2{
+    from {margin-top: -66.6%;right: 200%;}
+    to {margin-top: 30%; right: -10%;}
+  }
+  @keyframes image-3{
+    from {padding-bottom: 1250%;padding-left: 250%;}
+    to {padding: 0;}
+  }
+  @keyframes image-wiggle{
+    0%, 25%, 50%, 75%, 100%{transform: skewX(25deg)}
+    12.5%{transform: skewX(25deg) translate(5px, 10px)}
+    37.5%{transform: skewX(25deg) translate(10px, 5px)}
+    62.5%{transform: skewX(25deg) translate(8px, 2px)}
+    87.5%{transform: skewX(25deg) translate(1px, 12px)}
+  }
 
 
+  @keyframes background-wiggle{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: rotate(3deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: rotate(-1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
 
 
+  @keyframes sprinkle-wiggle-0{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-1{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: skew(0, -10deg) scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: skew(-10deg, 0) scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: skew(0, -10deg) scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: skew(-10deg, 0) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-2{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: scale(1.15, 1.05) rotate(-6deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: scale(0.95, 1.1) rotate(10deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-3{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: scale(1.15, 1.05) rotate(-4deg) translate3d(10px, -2px, 0)}
+    37.5%{transform: scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: scale(1.05, 0.9) rotate(4deg) translate3d(10px, 1px, 0)}
+    87.5%{transform: scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-4{
+    // 0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: skew(0, -5deg) scale(1.15, 1.05) rotate(-10deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: skew(0, 10deg) scale(0.95, 1.2) rotate(8deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: skew(0, -10deg) scale(1.1, 0.9) rotate(-8deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: skew(0, 5deg) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-5{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: skew(0, -30deg) rotate(5deg) translate3d(10px, -20px, 0)}
+    37.5%{transform: skew(0, -30deg) rotate(5deg) translate3d(20px, 2px, 0)}
+    62.5%{transform: skew(0, -30deg) rotate(5deg) translate3d(10px, 10px, 0)}
+    87.5%{transform: skew(0, -30deg) rotate(5deg) translate3d(20px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-6{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: skew(15deg, 0) scale(1.1, 0.95) rotate(-4deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: skew(15deg, 0) scale(0.9, 1.15) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: skew(15deg, 0) scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: skew(15deg, 0) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes button-wiggle{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: rotate(-3deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: rotate(-4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
 
-
-
-@keyframes background-wiggle{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform: rotate(3deg) translate3d(2px, -2px, 0)}
-  37.5%{transform: rotate(-1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform: rotate(4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform: rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-
-
-@keyframes sprinkle-wiggle-0{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
-  37.5%{transform:scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform:scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle-1{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:skew(0, -10deg) scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
-  37.5%{transform:skew(-10deg, 0) scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:skew(0, -10deg) scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform:skew(-10deg, 0) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle-2{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:scale(1.15, 1.05) rotate(-6deg) translate3d(2px, -2px, 0)}
-  37.5%{transform:scale(0.95, 1.1) rotate(10deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform:scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle-3{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:scale(1.15, 1.05) rotate(-4deg) translate3d(10px, -2px, 0)}
-  37.5%{transform:scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:scale(1.05, 0.9) rotate(4deg) translate3d(10px, 1px, 0)}
-  87.5%{transform:scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle-4{
-  // 0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:skew(0, -5deg) scale(1.15, 1.05) rotate(-10deg) translate3d(2px, -2px, 0)}
-  37.5%{transform:skew(0, 10deg) scale(0.95, 1.2) rotate(8deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:skew(0, -10deg) scale(1.1, 0.9) rotate(-8deg) translate3d(1px, 1px, 0)}
-  87.5%{transform:skew(0, 5deg) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle-5{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:skew(0, -30deg) rotate(5deg) translate3d(10px, -20px, 0)}
-  37.5%{transform:skew(0, -30deg) rotate(5deg) translate3d(20px, 2px, 0)}
-  62.5%{transform:skew(0, -30deg) rotate(5deg) translate3d(10px, 10px, 0)}
-  87.5%{transform:skew(0, -30deg) rotate(5deg) translate3d(20px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle-6{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:skew(15deg, 0) scale(1.1, 0.95) rotate(-4deg) translate3d(2px, -2px, 0)}
-  37.5%{transform:skew(15deg, 0) scale(0.9, 1.15) rotate(1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:skew(15deg, 0) scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform:skew(15deg, 0) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes sprinkle-wiggle{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform:scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
-  37.5%{transform:scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform:scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform:scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-@keyframes button-wiggle{
-  0%, 25%, 50%, 75%, 100%{transform:none}
-  12.5%{transform: rotate(-3deg) translate3d(2px, -2px, 0)}
-  37.5%{transform: rotate(1deg) translate3d(-1px, 2px, 0)}
-  62.5%{transform: rotate(-4deg) translate3d(1px, 1px, 0)}
-  87.5%{transform: rotate(5deg) translate3d(-2px, -1px, 0)}
-}
-
-@keyframes cta-hover{
-  0%, 100%{transform:scale(1, 1) rotate(0deg) translateZ(0)}
-  21%{transform:scale(1.76, 0.46) rotate(-9deg) translateZ(0)}
-  50%{transform:scale(0.82, 1.21) rotate(13deg) translateZ(0)}}
+  @keyframes cta-hover{
+    0%, 100%{transform: scale(1, 1) rotate(0deg) translateZ(0)}
+    21%{transform: scale(1.76, 0.46) rotate(-9deg) translateZ(0)}
+    50%{transform: scale(0.82, 1.21) rotate(13deg) translateZ(0)}}
 </style>
