@@ -43,7 +43,7 @@
 
 
       <div class="body-section" ref="section" :class="{ 'reverse': i % 2 !== 0, 'invisible': scrolling < i }" v-for="(sector, i) in data">
-        <img class="body-section-img" :style="{marginLeft: i === 4 ? '10%' : 0, maxWidth: i === 4 || i === 6 ? '391px' : '50%'}" :src="'static/' + i + '.jpg'">
+        <img class="body-section-img" :style="{marginLeft: i === 4 ? '10%' : 0, maxWidth: i === 4 || i >= 6 ? '391px' : '50%'}" :src="'static/' + i + '.jpg'">
         <div class="body-section-content">
 
         <img class="body-section-content-figure" :style="{animation:('sprinkle-wiggle-' + i + ' 5s ease-in-out infinite')}" :src="'static/' + i + '.svg'" @mouseover="e=>{ setAnim(e, i) }">
@@ -78,7 +78,7 @@
           <div class="body-cases-title-font">Наши кейсы: </div>
           <div class="body-cases-title-hr"></div>
         </div>
-        <div class="body-cases-case" :class="{'invisible': scrolling < i + 7}" ref="section" v-for="(cell, i) in cases">
+        <div class="body-cases-case" :class="{'invisible': scrolling < i + 9}" ref="section" v-for="(cell, i) in cases">
           <div class="body-cases-case-body" :class="'case-body-'+i">
           <img class="body-cases-case-logotip" :class="'logotip-' + i" :src="'static/case_logo_' + i + '.png'">
             <div class="body-cases-case-body-bg"></div>
@@ -179,6 +179,14 @@
             title: 'Внедряем отчётность по метрикам ',
             about: 'Стоимость лида, стоимость брони, стоимость продажи. Процент некачественных лидов, процент зависших сделок и еще 67 метрик для отдела продаж и маркетинга.  Рост прибыли в итоге достигается тем, что <span>поддержка продаж ориентируется на данные (Data-driven)</span>, а не на теории или голые идеи.'
           },
+          {
+            title: ' ',
+            about: 'Разрабатываем и внедряем  <span class="big">мобильные приложения</span> для строительных и управляющих компаний .'
+          },
+          {
+            title: ' ',
+            about: 'Обучаем ваших сотрудников <span class="big">Онлайн школа</span> для экспертов по продаже недвижимости и руководителей департамента продаж.'
+          }
         ],
         cases: [
           {
@@ -204,7 +212,7 @@
         let height = document.scrollingElement.clientHeight
         for(let i = this.$refs['section'].length - 1; i >= 0 ; i--){
           let top = this.$refs['section'][i].getBoundingClientRect().top
-          let elem = top - height + ( i > 6 ? (height - 50) : (height / 3))
+          let elem = top - height + ( i > 8 ? (height - 50) : (height / 3))
           if(elem <= 0){
             this.scrolling = i;
             break;
@@ -633,7 +641,7 @@
       }
       &-content{
         max-width: 490px;
-        margin: 0 0 0 80px;
+        margin: 0 80px;
         width: 75vw;
         &-figure{
           transition: 0.5s;
@@ -652,6 +660,7 @@
           transition: 0.3s;
           font-weight: bold;
           font-size: 24px;
+          min-height: 36px;
           margin-bottom: 18px;
           text-align: left;
           line-height: 150%;
@@ -665,6 +674,9 @@
           line-height: 150%;
           &>span{
             font-weight: bold;
+            &.big{
+              font-size: 28px;
+            }
           }
         }
       }
@@ -938,7 +950,8 @@
       margin-left: 118px;
     }
     &-number{
-      width: auto;
+      // width: auto;
+      align-items: flex-start;
       margin-left: 103px;
       &-title{
           font-weight: bold;
@@ -1347,6 +1360,20 @@
     37.5%{transform: skew(15deg, 0) scale(0.9, 1.15) rotate(1deg) translate3d(-1px, 2px, 0)}
     62.5%{transform: skew(15deg, 0) scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
     87.5%{transform: skew(15deg, 0) scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-7{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: scale(1.15, 1.05) rotate(-4deg) translate3d(10px, -2px, 0)}
+    37.5%{transform: scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: scale(1.05, 0.9) rotate(4deg) translate3d(10px, 1px, 0)}
+    87.5%{transform: scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
+  }
+  @keyframes sprinkle-wiggle-8{
+    0%, 25%, 50%, 75%, 100%{transform:none}
+    12.5%{transform: scale(1.15, 1.05) rotate(-4deg) translate3d(2px, -2px, 0)}
+    37.5%{transform: scale(0.95, 1.1) rotate(1deg) translate3d(-1px, 2px, 0)}
+    62.5%{transform: scale(1.05, 0.9) rotate(4deg) translate3d(1px, 1px, 0)}
+    87.5%{transform: scale(0.96, 1.04) rotate(5deg) translate3d(-2px, -1px, 0)}
   }
   @keyframes sprinkle-wiggle{
     0%, 25%, 50%, 75%, 100%{transform:none}
