@@ -14,7 +14,7 @@ $message = '
   <title>Заявка с сайта <a href="http://akh.kz/">akh.kz</a></title>
 </head>
 <body>
-  <p>Заявка с сайта <a href="http://akh.k/">akh.k</a></p>
+  <p>Заявка с сайта <a href="http://akh.kz/">akh.kz</a></p>
   <p>ФИО: '.$fio.'</p>
   <p>Телефон:'.$phone.'</p>
   <p>Вопрос: '.$question.'</p>

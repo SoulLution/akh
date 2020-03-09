@@ -29,7 +29,7 @@
       <div class="header-animations">
 
         <div class="header-animations-child" v-for="i in 3">
-          <div class="header-animations-child-item" :style="{backgroundImage: `url(/static/${j}.jpg)`, animationDelay: (j * (i / 5)) + 's'}" v-for="j in 5"></div>
+          <div class="header-animations-child-item" :style="{backgroundImage: `url(/static/head/${i+j}.jpg)`, animationDelay: (j * (i / 5)) + 's'}" v-for="j in 5"></div>
         </div>
         
       </div>
@@ -112,10 +112,10 @@
       </form>
       <div class="footer-ready">Готовы к работе с вами:</div>
       <div class="footer-number">
-        <a href="tel:87070000092" class="button footer-number-button">
+        <a href="tel:87005020505" class="button footer-number-button">
             <img class="button-bg reverse" src="static/phone_bg.svg">
             <img class="button-shadow reverse" style="right: -7px;top: -1px;" src="static/phone_shadow.svg">
-            <div class="button-title footer-number-title">8 707 000 00 92</div>
+            <div class="button-title footer-number-title">8 700 502 05 05</div>
           </a>
       </div>
       <div class="footer-contacts">
