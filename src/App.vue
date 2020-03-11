@@ -29,7 +29,9 @@
       <div class="header-animations">
 
         <div class="header-animations-child" v-for="i in 3">
-          <div class="header-animations-child-item" :style="{backgroundImage: `url(/static/head/${i+j}.jpg)`, animationDelay: (j * (i / 5)) + 's'}" v-for="j in 5"></div>
+          <div class="header-animations-child-item" :style="{animationDelay: (j * (i / 5)) + 's'}" v-for="j in 5">
+            <img ref="img" :src="`/static/head/${i+j.toString()}.jpg`">
+          </div>
         </div>
         
       </div>
@@ -208,6 +210,12 @@
       }
     },
     created(){
+      // setTimeout(()=>{
+      //   for(let item of this.$refs.img)
+      //     setInterval(()=>{
+      //       item.setAttribute('src',`/static/head/${this.randomInteger(0,29)}.jpg`)
+      //     },1000)
+      // })
       window.onscroll = () => {
         let height = document.scrollingElement.clientHeight
         for(let i = this.$refs['section'].length - 1; i >= 0 ; i--){
@@ -222,6 +230,10 @@
       }
     },
     methods: {
+      randomInteger(min, max) {
+        let rand = min + Math.random() * (max + 1 - min);
+        return Math.floor(rand);
+      },
       popupMessage(e){
         this.type = e
         if(e === false)
@@ -539,17 +551,23 @@
           border-radius: 5px;
           height: 12.5vw;
           transform: skewX(25deg);
-          background-color: red;
-          background-image: url(/static/0.jpg);
-          background-position: -12.5% -12.5% !important;
+          background-color: grey;
+          // background-image: url(/static/0.jpg);
+          // background-position: -12.5% -12.5% !important;
           // background-repeat: no-repeat !important;
-          background-size: 125% 125% !important;
+          // background-size: 125% 125% !important;
           animation: image-wiggle 7s ease-in-out infinite;
           // background-attachment: fixed !important;
+          overflow: hidden;
           width: 15vw;
           max-height: 140px;
           max-width: 250px;
           margin: 24px;
+          &>img{
+            height: 100%;
+            width: 100%;
+            transform: scale(1.2);
+          }
         }
       }
     }
@@ -1198,6 +1216,7 @@
       }
       &-title{
         width: 80vw;
+        margin-bottom: 16px;
       }
       &-about{
         width: 80vw;
